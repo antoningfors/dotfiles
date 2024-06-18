@@ -19,7 +19,29 @@ plugins = {
 		lazy = false, 
 		priority = 1000,
 		config = function() vim.cmd([[colorscheme rose-pine]]) end,
-	},	
+	},
+	{
+		enabled = true,
+		"nvim-neorg/neorg",
+		build = ":Neorg sync-parsers",
+		-- tag = "*",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		config = function()
+		  require("neorg").setup {
+			load = {
+			  ["core.defaults"] = {}, -- Loads default behaviour
+			  ["core.concealer"] = {}, -- Adds pretty icons to your documents
+			  ["core.dirman"] = { -- Manages Neorg workspaces
+				config = {
+				  workspaces = {
+					notes = "~/notes",
+				  },
+				},
+			  },
+			},
+		  }
+		end,
+	},
 	{
 		enabled = true,
 		"dstein64/vim-startuptime", 
@@ -37,14 +59,14 @@ plugins = {
 		main = "nvim-treesitter.configs",
 		config = {
 			-- A list of parser names always be installed)
-			ensure_installed = { "c", "zig", "lua", "vim", "vimdoc", "javascript" },
+			ensure_installed = { "c", "cpp", "zig", "lua", "vim", "vimdoc", "javascript" },
 
 			-- Install parsers synchronously (only applied to `ensure_installed`)
 			sync_install = false,
 
 			-- Automatically install missing parsers when entering buffer
 			-- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
-			auto_install = true,
+			auto_install = false,
 
 			-- List of parsers to ignore installing (for "all")
 			--ignore_install = { "javascript" },
@@ -148,10 +170,8 @@ vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 
---Build command
-vim.keymap.set('n', '<C-b>', ':make<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', '<M-m>', ':make<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>m', ':make<CR>', { noremap = true, silent = true })
+--Open VIMRC
+vim.keymap.set('n', '<leader>e', ':e $MYVIMRC<CR>', { noremap = true, silent = true })
 
 local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
 parser_config.powershell = {
@@ -165,3 +185,70 @@ parser_config.powershell = {
   },
   filetype = "ps1", -- if filetype does not match the parser name
 }
+
+vim.api.nvim_create_autocmd({"FileType"}, {
+  pattern = {"lua", "*.lua"},
+  callback = function(ev)
+	  vim.opt_local.makeprg = 'luafile %'
+  end
+})
+
+-- Function to compile the C project
+function compile_project()
+  -- Save the current window layout
+  local cur_win = vim.api.nvim_get_current_win()
+  local windows = vim.api.nvim_tabpage_list_wins(0)
+
+  -- Check if there are two windows open
+  if #windows < 2 then
+    print("Please open a vertical split with the source code in both panes.")
+    return
+  end
+
+  -- Assume the current window is the left one and the other is the right one
+  local right_win = windows[1] == cur_win and windows[2] or windows[1]
+
+  -- Save the buffer number of the right window
+  local right_buf = vim.api.nvim_win_get_buf(right_win)
+
+  -- Change to the right window and run the compilation command
+  vim.api.nvim_set_current_win(right_win)
+  
+  -- Change this command to match your compilation command
+  vim.cmd("term powershell -ExecutionPolicy Bypass -File build.ps1")
+
+  -- After the compilation is done, wait for the user to press a key to restore the source code
+  vim.cmd("nnoremap <buffer> <silent> <CR> :lua restore_window(" .. cur_win .. ", " .. right_win .. ", " .. right_buf .. ")<CR>")
+
+  -- Change back to the left window
+  --vim.api.nvim_set_current_win(cur_win)
+end
+
+-- Function to restore the right window with the original buffer
+function restore_window(cur_win, win, buf)
+  vim.api.nvim_win_set_buf(win, buf)
+  vim.api.nvim_set_current_win(cur_win)
+end
+
+-- Create a keybinding for the compile_project function
+vim.api.nvim_set_keymap('n', '<C-b>', ':lua compile_project()<CR>', { noremap = true, silent = true })
+
+
+
+-- Function to reload init.lua
+function reload_config()
+  -- Clear the package cache
+  for name,_ in pairs(package.loaded) do
+    -- Match all loaded packages (adjust the pattern if needed to be more specific)
+    if name:match('^.*') then
+      package.loaded[name] = nil
+    end
+  end
+  -- Reload the init.lua file
+  dofile(vim.fn.stdpath('config') .. '/init.lua')
+end
+
+-- Create a keybinding for reloading init.lua
+vim.api.nvim_set_keymap('n', '<leader>r', ':lua reload_config()<CR>', { noremap = true, silent = true })
+
+
