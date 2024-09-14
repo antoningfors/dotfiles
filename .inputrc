@@ -1,0 +1,3 @@
+#use vi as readline editor
+set editing-mode vi	
+set bell-style none
