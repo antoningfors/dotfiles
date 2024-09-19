@@ -94,6 +94,7 @@ nix.settings.experimental-features = ["nix-command" "flakes" ];
     networkmanagerapplet
     manix
     clang
+    cargo
   ])
 
   ++
