@@ -93,6 +93,7 @@ nix.settings.experimental-features = ["nix-command" "flakes" ];
     pavucontrol
     tmux
     xclip
+    brightnessctl
     (st.override { conf = builtins.readFile ../st/config.h; })
     unzip
     networkmanagerapplet
