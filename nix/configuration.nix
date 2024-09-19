@@ -47,6 +47,8 @@ nix.settings.experimental-features = ["nix-command" "flakes" ];
   # Configure keymap in X11
   services.xserver.xkb.layout = "us,se";
   services.xserver.xkb.options = "ctrl:nocaps,grp:alt_shift_toggle";
+  services.xserver.autoRepeatDelay = 300;
+  services.xserver.autoRepeatInterval = 30; 
 
 
   # Enable CUPS to print documents.
