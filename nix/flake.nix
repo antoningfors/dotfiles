@@ -14,15 +14,19 @@
 	let
 		system = "x86_64-linux";
 		lib = nixpkgs.lib;
-		pkgs = nixpkgs.legacyPackages.${system};
+		pkgs = import nixpkgs {system = "x86_64-linux"; config.allowUnfree = true;};
 		pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
 	in {
 		nixosConfigurations = {
 			anton-desktop = lib.nixosSystem {
 				system = "x86_64-linux";
-				modules = [ ./hosts/desktop/configuration.nix ];
+				modules = [ 
+						./hosts/desktop/configuration.nix 
+						./modules/nixos/nvidia.nix
+					];
 				specialArgs = {
 					inherit pkgs-unstable;
+					inherit pkgs;
 				};
 			};
 			anton-laptop = lib.nixosSystem {
