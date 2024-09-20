@@ -2,8 +2,6 @@
 
 {
 
-
-
 # Enable OpenGL
   hardware.opengl.enable = true;
 
@@ -31,17 +29,23 @@
     open = false;
 
     # Enable the Nvidia settings menu,
-	# accessible via `nvidia-settings`.
+    # accessible via `nvidia-settings`.
     nvidiaSettings = true;
+
+    # Whether to enable forcefully the full composition pipeline. This sometimes fixes screen tearing issues. This has been
+    # reported to reduce the performance of some OpenGL applications and may produce issues in WebGL. It also drastically
+    # increases the time the driver needs to clock down after load.
+    forceFullCompositionPipeline = true;
+
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
     package = config.boot.kernelPackages.nvidiaPackages.stable;
 
-    prime = { 
-		# Make sure to use the correct Bus ID values for your system!
-		  intelBusId = "PCI:00:02.0";
-		  nvidiaBusId = "PCI:01:00.0";
-	};
+    prime = {
+      # Make sure to use the correct Bus ID values for your system!
+      intelBusId = "PCI:00:02.0";
+      nvidiaBusId = "PCI:01:00.0";
+    };
 
   };
 
