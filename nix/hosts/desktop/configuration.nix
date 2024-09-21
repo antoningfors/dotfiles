@@ -39,10 +39,28 @@ nix.settings.experimental-features = ["nix-command" "flakes" ];
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
+
+  # Set i3 as window manager.
   services.xserver.windowManager.i3.enable = true;
 
+  # TODO: Monitor specific options should probably not be set here
 
+  # ForceCompositionPipeline inorder to remove screeen tearing issues with Nvidia drivers. 
+  services.xserver.screenSection = ''Option "metamodes" "nvidia-auto-select {ForceCompositionPipeline=On}, nvidia-auto-select {ForceCompositionPipeline=On}"'';
   
+  # You can also use ForceFullCompositionPipeline if necessary.
+  # services.xserver.screenSection = ''Option "metamodes" "nvidia-auto-select {ForceFullCompositionPipeline=On}, nvidia-auto-select {ForceFullCompositionPipeline=On}"'';
+
+    services.xserver.xrandrHeads = [
+    {
+      output = "DP-0";
+      primary = true;
+    }
+    {
+      output = "HDMI-0";
+    }
+  ];
+
 
   # Configure keymap in X11
   services.xserver.xkb.layout = "us,se";

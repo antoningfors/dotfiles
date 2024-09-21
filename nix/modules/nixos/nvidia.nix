@@ -35,7 +35,9 @@
     # Whether to enable forcefully the full composition pipeline. This sometimes fixes screen tearing issues. This has been
     # reported to reduce the performance of some OpenGL applications and may produce issues in WebGL. It also drastically
     # increases the time the driver needs to clock down after load.
-    forceFullCompositionPipeline = true;
+    # This option does not fully work on multiple screens instead use xserver.screenSection which probably should not be set here.
+    #services.xserver.screenSection = ''Option "metamodes" "nvidia-auto-select {ForceFullCompositionPipeline=On}, nvidia-auto-select {ForceFullCompositionPipeline=On}"'';
+    # forceFullCompositionPipeline = true;
 
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
