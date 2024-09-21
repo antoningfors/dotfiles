@@ -41,7 +41,10 @@ nix.settings.experimental-features = ["nix-command" "flakes" ];
   services.xserver.enable = true;
   services.xserver.windowManager.i3.enable = true;
 
-
+  # Firefox smooth scrolling and navigation with trackpad
+  environment.sessionVariables = {
+    MOZ_USE_XINPUT2 = "1";
+  };
   
 
   # Configure keymap in X11
