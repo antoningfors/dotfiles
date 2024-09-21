@@ -34,6 +34,7 @@
 				modules = [ ./hosts/laptop/configuration.nix ];
 				specialArgs = {
 					inherit pkgs-unstable;
+					inherit pkgs;
 				};
 			};
 		};
