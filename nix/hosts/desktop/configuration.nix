@@ -112,8 +112,8 @@ nix.settings.experimental-features = ["nix-command" "flakes" ];
     tmux
     xclip
     brightnessctl
-    #(st.override { conf = builtins.readFile ../st/config.h; })
-    st
+    (st.override { conf = builtins.readFile ../../../st/config.h; })
+    #st
     unzip
     networkmanagerapplet
     manix
