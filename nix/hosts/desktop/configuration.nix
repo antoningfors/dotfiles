@@ -113,13 +113,13 @@ nix.settings.experimental-features = ["nix-command" "flakes" ];
     xclip
     brightnessctl
     (st.override { conf = builtins.readFile ../../../st/config.h; })
-    #st
     unzip
     networkmanagerapplet
     manix
     clang
     cargo
     pciutils
+    kdePackages.spectacle
   ])
 
   ++
