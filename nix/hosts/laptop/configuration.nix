@@ -40,7 +40,13 @@ nix.settings.experimental-features = ["nix-command" "flakes" ];
   # Enable the X11 windowing system.
   services.xserver.enable = true;
   services.xserver.windowManager.i3.enable = true;
+  services.xserver.videoDrivers = [ "intel" ];
 
+hardware.opengl = {
+  enable = true;
+  driSupport = true;
+  extraPackages = with pkgs; [ vaapiIntel ];
+};
   # Firefox smooth scrolling and navigation with trackpad
   environment.sessionVariables = {
     MOZ_USE_XINPUT2 = "1";
@@ -56,6 +62,12 @@ nix.settings.experimental-features = ["nix-command" "flakes" ];
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
+
+services.avahi = {
+  enable = true;
+  nssmdns4 = true;
+  openFirewall = true;
+};
 
   # Enable sound.
   hardware.pulseaudio.enable = true;
@@ -103,6 +115,8 @@ nix.settings.experimental-features = ["nix-command" "flakes" ];
     manix
     clang
     cargo
+    pciutils
+    system-config-printer
   ])
 
   ++
