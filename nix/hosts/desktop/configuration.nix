@@ -72,6 +72,12 @@ nix.settings.experimental-features = ["nix-command" "flakes" ];
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+  };
+
   # Enable sound.
   hardware.pulseaudio.enable = true;
   # OR
@@ -120,6 +126,7 @@ nix.settings.experimental-features = ["nix-command" "flakes" ];
     cargo
     pciutils
     kdePackages.spectacle
+    system-config-printer
   ])
 
   ++
