@@ -39,7 +39,7 @@ nix.settings.experimental-features = ["nix-command" "flakes" ];
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
-  services.xserver.windowManager.i3.enable = true;
+  services.xserver.windowManager.sway.enable = true;
   services.xserver.videoDrivers = [ "intel" ];
 
 hardware.opengl = {
