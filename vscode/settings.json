@@ -1,0 +1,33 @@
+{
+    // Update Settings
+    "extensions.autoUpdate": false,
+    "update.mode": "manual",
+
+    // Telemetry
+    "telemetry.feedback.enabled": false,
+    "telemetry.editStats.enabled": false,
+    "telemetry.telemetryLevel": "off",
+
+    // Terminal
+    "terminal.integrated.defaultProfile.windows": "PowerShell",
+    "terminal.integrated.profiles.windows": {
+        "PowerShell 7": {
+            "source": "PowerShell",
+            "icon": "terminal-powershell"
+        },
+        
+        "PowerShell 5": {
+        "path": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+        "args": ["-NoProfile", "-NoLogo"],
+        "icon": "terminal-powershell"
+        },
+        
+        "Command Prompt": {
+            "path": [
+                "${env:windir}\\Sysnative\\cmd.exe"
+            ],
+            "args": [],
+            "icon": "terminal-cmd"
+        },
+    }
+}
