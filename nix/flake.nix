@@ -37,6 +37,14 @@
 					inherit pkgs;
 				};
 			};
+			anton-virtual = lib.nixosSystem {
+				system = "x86_64-linux";
+				modules = [ ./hosts/virtual/configuration.nix ];
+				specialArgs = {
+					inherit pkgs-unstable;
+					inherit pkgs;
+				};
+			};
 		};
 	};
 }
