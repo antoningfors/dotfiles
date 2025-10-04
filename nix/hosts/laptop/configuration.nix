@@ -37,16 +37,21 @@ nix.settings.experimental-features = ["nix-command" "flakes" ];
   #   useXkbConfig = true; # use xkb.options in tty.
   # };
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-  services.xserver.windowManager.sway.enable = true;
-  services.xserver.videoDrivers = [ "intel" ];
+  programs.hyprland.enable = true;
+  programs.hyprland.xwayland.enable = true;
+  programs.hyprlock.enable = true;
 
-hardware.opengl = {
-  enable = true;
-  driSupport = true;
-  extraPackages = with pkgs; [ vaapiIntel ];
-};
+  # Enable the X11 windowing system.
+
+  #services.xserver.enable = true;
+  #services.xserver.windowManager.i3.enable = true;
+  #services.xserver.videoDrivers = [ "intel" ];
+
+  #hardware.opengl = {
+  #enable = true;
+  #driSupport = true;
+  #extraPackages = with pkgs; [ vaapiIntel ];
+  #};
   # Firefox smooth scrolling and navigation with trackpad
   environment.sessionVariables = {
     MOZ_USE_XINPUT2 = "1";
@@ -70,7 +75,7 @@ services.avahi = {
 };
 
   # Enable sound.
-  hardware.pulseaudio.enable = true;
+services.pulseaudio.enable = false;
   # OR
   # services.pipewire = {
   #   enable = true;
@@ -117,6 +122,15 @@ services.avahi = {
     cargo
     pciutils
     system-config-printer
+    appimage-run
+    dig
+    chromium
+    tor-browser
+    ghostty
+    kitty #default hyprland
+    waybar
+    wofi
+    font-awesome
   ])
 
   ++
@@ -125,6 +139,11 @@ services.avahi = {
   	neovim
 	zig
   ]);
+
+  fonts.packages = with pkgs; [
+    font-awesome
+  ];
+
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

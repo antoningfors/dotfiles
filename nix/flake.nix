@@ -2,7 +2,7 @@
 	description = "Build entire system";
 
 	inputs = {
-		nixpkgs.url = "nixpkgs/nixos-24.05";
+		nixpkgs.url = "nixpkgs/nixos-25.05";
 		nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
 		home-manager = {
 			url = "github:nix-community/home-manager";

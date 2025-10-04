@@ -125,8 +125,12 @@ nix.settings.experimental-features = ["nix-command" "flakes" ];
     clang
     cargo
     pciutils
+<<<<<<< HEAD
     kdePackages.spectacle
     system-config-printer
+=======
+    wireguard
+>>>>>>> 42a389b (update config)
   ])
 
   ++
