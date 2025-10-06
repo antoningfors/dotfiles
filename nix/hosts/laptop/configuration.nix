@@ -125,12 +125,12 @@ services.pulseaudio.enable = false;
     appimage-run
     dig
     chromium
-    tor-browser
     ghostty
     kitty #default hyprland
     waybar
     wofi
     font-awesome
+    stow
   ])
 
   ++
