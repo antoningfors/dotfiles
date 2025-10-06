@@ -37,7 +37,7 @@ nix.settings.experimental-features = ["nix-command" "flakes" ];
   #   useXkbConfig = true; # use xkb.options in tty.
   # };
 
-
+  virtualisation.hypervGuest.enable = true;
   programs.hyprland.enable = true;
   programs.hyprland.xwayland.enable = true;
   programs.hyprlock.enable = true;
