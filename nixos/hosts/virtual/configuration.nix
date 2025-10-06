@@ -37,10 +37,21 @@ nix.settings.experimental-features = ["nix-command" "flakes" ];
   #   useXkbConfig = true; # use xkb.options in tty.
   # };
 
+
   programs.hyprland.enable = true;
   programs.hyprland.xwayland.enable = true;
   programs.hyprlock.enable = true;
+  programs.hyprland.withUWSM = true; # recommended for most users
 
+  services.greetd = {
+      enable = true;
+      settings = {
+	default_session = {
+	  command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd hyprland";
+	  # command = "${pkgs.greetd.greetd}/bin/agreety --cmd hyprland";
+	};
+      };
+    };
   # Enable the X11 windowing system.
 
   #services.xserver.enable = true;
@@ -131,6 +142,7 @@ services.pulseaudio.enable = false;
     waybar
     wofi
     font-awesome
+    stow
   ])
 
   ++
