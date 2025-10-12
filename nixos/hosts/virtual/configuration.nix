@@ -118,9 +118,9 @@ services.pulseaudio.enable = false;
   # $ nix search wget
   environment.systemPackages = 
   (with pkgs; [
-    tmux
     firefox-esr
     git
+    gh
     pavucontrol
     tmux
     xclip
@@ -135,8 +135,6 @@ services.pulseaudio.enable = false;
     system-config-printer
     appimage-run
     dig
-    chromium
-    tor-browser
     ghostty
     kitty #default hyprland
     waybar
